@@ -103,8 +103,8 @@ package Screens
 			var source:String ="../../assets/images/gameHeaderLine.png" ;
 			trace(source);
 			socialService.facebookLinkPostWithCustomThumbnail(FBSample.fbJSON.accessToken,"http://api.shephertz.com/",status,
-				"../../assets/images/logo.png"
-				,"Snake War","Success",new callBack());
+				"https://github.com/SamitaMShephertz/App42-SocialLeaderBoard-Sample/blob/5f3029c410aa1f86840cf34e7d6a65466b2c6709/assets/images/logo.png?raw=true"
+				,"Snake War","Beat my score",new callBack());
 			headerLine1.visible = true
 			share.visible = false
 		}
