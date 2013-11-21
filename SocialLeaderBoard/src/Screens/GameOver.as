@@ -1,3 +1,4 @@
+import com.adobe.serialization.json.JSON;
 import com.shephertz.app42.paas.sdk.as3.App42CallBack;
 import com.shephertz.app42.paas.sdk.as3.App42Exception;
 import com.shephertz.app42.paas.sdk.as3.App42Log;
@@ -20,8 +21,13 @@ class callBack implements App42CallBack{
 	}
 	public function onException(excption:App42Exception):void
 	{
-		headerLine1.text = excption.message
-		
+		App42Log.debug("Exception is : " + excption);
+		if(excption.getAppErrorCode() == 1401)
+		{
+			var objectMessage:Object = com.adobe.serialization.json.JSON.decode(excption.message);
+			var message:String  = objectMessage["app42Fault"]["details"];
+			headerLine1.text = message + " please check your credentials.";
+		}
 	}
 }
 package Screens

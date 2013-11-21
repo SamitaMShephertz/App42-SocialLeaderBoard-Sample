@@ -1,5 +1,8 @@
 import com.shephertz.app42.paas.sdk.as3.App42CallBack;
 import com.shephertz.app42.paas.sdk.as3.App42Exception;
+import com.shephertz.app42.paas.sdk.as3.App42Log;
+import com.shephertz.app42.paas.sdk.as3.game.Game;
+import com.shephertz.app42.paas.sdk.as3.social.Social;
 
 import starling.display.Button;
 import starling.text.TextField;
@@ -18,10 +21,16 @@ class callBack implements App42CallBack{
 	
 	public function onSuccess(res:Object):void
 	{
+		if(res is Social)
+		{
+			var social:Social = Social(res);
+			App42Log.debug("Response is : " + social);
+		}
 		
 	}
 	public function onException(excption:App42Exception):void
 	{
+		App42Log.debug("Exception is : " + excption);
 	}
 }
 
