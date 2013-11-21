@@ -28,9 +28,7 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="F:/Public repo/App42_ACTIONSCRIPT_SDK/sample/SnakeWar/libs/starling.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="C:/xampp/htdocs/GraphAPI_Web_1_8_1.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/App42_ActionScript_SDK/bin/App42_ActionScript_SDK.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
