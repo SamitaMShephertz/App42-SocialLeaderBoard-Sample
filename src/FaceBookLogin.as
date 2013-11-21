@@ -39,20 +39,17 @@ package
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.text.TextField;
 	
-	public class FBSample extends Sprite
+	public class FaceBookLogin extends Sprite
 	{
 		protected static const APP_ID:String = "386763061449222"; //Place your application id here
 		private var screen:Sprite ;
 		public static var fbJSON:Object ="";
-		public function FBSample()
+		public function FaceBookLogin()
 		{
 			super();
-			App42API.initialize("62f6b446a152a488b92a7cc27421e6ee105247a973246b2d528ca67f746004fc",
-				"6ee0b3f11115e55b92c3eab66a5a2a94197a27cea8e43f4239748a443214a312");
+			App42API.initialize("<Enter_your_APIKey>","<Enter_your_SecretKey>");
 			initialize();
-			App42Log.setDebug(true);
 			
 			var bg:Image = new Image(Assets.getTextue("bg"));
 			this.addChild(bg);
@@ -94,7 +91,7 @@ package
 				this.removeFromParent(true);
 				var response:FacebookAuthResponse = result as FacebookAuthResponse;
 				fbJSON =response;
-				trace("response is : "+ response.toString())
+				App42Log.debug("response is : "+ response.toString())
 				var socialService:SocialService = App42API.buildSocialService();
 				socialService.linkUserFacebookAccount(fbJSON.uid,fbJSON.accessToken,new callBack());
 			} else {
@@ -130,7 +127,7 @@ package
 		}
 		private  function tryAgain_click(e:Event):void
 		{
-			var screen:Sprite = new FBSample;
+			var screen:Sprite = new FaceBookLogin;
 			this.parent.addChild(screen);
 			this.removeFromParent(true); 
 		}

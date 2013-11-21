@@ -12,7 +12,7 @@ package
 		
 		public function SocialLeaderBoard()
 		{
-			mystarling = new Starling(FBSample, stage);
+			mystarling = new Starling(FaceBookLogin, stage);
 			mystarling.antiAliasing = 2;
 			mystarling.start();
 		}

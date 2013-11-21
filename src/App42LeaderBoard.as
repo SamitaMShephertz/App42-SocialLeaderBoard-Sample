@@ -1,6 +1,7 @@
 import com.adobe.serialization.json.JSON;
 import com.shephertz.app42.paas.sdk.as3.App42CallBack;
 import com.shephertz.app42.paas.sdk.as3.App42Exception;
+import com.shephertz.app42.paas.sdk.as3.App42Log;
 import com.shephertz.app42.paas.sdk.as3.game.FacebookProfile;
 import com.shephertz.app42.paas.sdk.as3.game.Game;
 import com.shephertz.app42.paas.sdk.as3.game.Score;
@@ -29,8 +30,7 @@ var fifthUserRank:TextField;
 var fifthUserScore:TextField;
 var clearbtn:TextField;
 var scoreBoardService:ScoreBoardService;
-var gameName:String = "PokerGame";
-var userName:String = "Nick";
+var gameName:String = "<Enter_your_game_name>";
 class app42CallBack implements App42CallBack{
 	
 	public function onSuccess(res:Object):void
@@ -69,7 +69,7 @@ class app42CallBack implements App42CallBack{
 	}
 	public function onException(excption:App42Exception):void
 	{
-		trace("Exception is : " + excption);
+		App42Log.debug("Exception is : " + excption);
 		if(excption.getAppErrorCode() == 1401)
 		{
 			var objectMessage:Object = com.adobe.serialization.json.JSON.decode(excption.message);
@@ -87,19 +87,18 @@ class saveUserScoreCallBack implements App42CallBack{
 		if(res is Game)
 		{
 			var game:Game = Game(res);
-			trace("response is : " + game)			
+			App42Log.debug("response is : " + game)			
 		}
 	}
 	public function onException(excption:App42Exception):void
 	{
-		trace("Exception is : " + excption);
+		App42Log.debug("Exception is : " + excption);
 	}
 }
 
 package
 {
 	import com.shephertz.app42.paas.sdk.as3.App42API;
-	import com.shephertz.app42.paas.sdk.as3.App42Log;
 	
 	import Screens.Menu;
 	
@@ -117,7 +116,6 @@ package
 			super();
 			fbUserId = jsonObject.uid;
 			fbAccessToken = jsonObject.accessToken;
-			App42Log.setDebug(true);
 			var bg:Image = new Image(Assets.getTextue("bg"));
 			this.addChild(bg);
 			

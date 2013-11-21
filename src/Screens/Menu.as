@@ -68,7 +68,7 @@ package Screens
 		
 		public function userScore_Click(event:Event):void
 		{
-			var screen:Sprite = new App42LeaderBoard(FBSample.fbJSON);
+			var screen:Sprite = new App42LeaderBoard(FaceBookLogin.fbJSON);
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 		}
@@ -78,7 +78,7 @@ package Screens
 			Facebook.logout(onLogout);	;
 		}
 		protected function onLogout(success:Boolean):void {  
-			var screen:Sprite = new FBSample();
+			var screen:Sprite = new FaceBookLogin();
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 		}

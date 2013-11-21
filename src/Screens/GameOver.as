@@ -1,6 +1,7 @@
 import com.shephertz.app42.paas.sdk.as3.App42CallBack;
 import com.shephertz.app42.paas.sdk.as3.App42Exception;
-import com.shephertz.app42.paas.sdk.as3.social.Social;
+import com.shephertz.app42.paas.sdk.as3.App42Log;
+import com.shephertz.app42.paas.sdk.as3.App42Response;
 
 import starling.display.Button;
 import starling.text.TextField;
@@ -10,12 +11,12 @@ var headerLine1:TextField;
 class callBack implements App42CallBack{
 	
 	public function onSuccess(res:Object):void
-	{
-		if(res is Social)
-		{
-			var social:Social = res as Social;
+	{	
+			var app42Response:App42Response = res as App42Response;		
+			App42Log.debug("Response String  :  "+app42Response.getStrResponse());
+			App42Log.debug("Response suucess :  "+app42Response.isResponseSuccess());
 			headerLine1.text = "Your Score has been successfully updated on your wall"
-		}
+		
 	}
 	public function onException(excption:App42Exception):void
 	{
@@ -43,7 +44,7 @@ package Screens
 		{
 			super();
 			score = s;
-			new App42LeaderBoard(FBSample.fbJSON).saveUserScore(score);
+			new App42LeaderBoard(FaceBookLogin.fbJSON).saveUserScore(score);
 			var bg:Image = new Image(Assets.getTextue("bg"));
 			this.addChild(bg);
 			App42Log.setDebug(true);	
@@ -63,17 +64,17 @@ package Screens
 			this.addChild(gameover);
 			gameover.addEventListener(Event.TRIGGERED, plyAgainBtn_Click);
 			
-			share = new Button(Assets.getTextue("share"));
-			share.x = 150;
-			share.y = 390;
-			this.addChild(share);
-			share.addEventListener(Event.TRIGGERED, share_click);
-			
 			var btn:Button = new Button(Assets.getTextue("menubtn"));
 			btn.x = 380;
 			btn.y = 350;
 			this.addChild(btn);
 			btn.addEventListener(Event.TRIGGERED, menuBtn_Click);
+			
+			share = new Button(Assets.getTextue("share"));
+			share.x = 370;
+			share.y = 410;
+			this.addChild(share);
+			share.addEventListener(Event.TRIGGERED, share_click);
 			
 			var msg:Image = new Image(Assets.getTextue("copyright"));
 			msg.x = 0;
@@ -101,8 +102,8 @@ package Screens
 			var socialService:SocialService = App42API.buildSocialService();
 			var status:String = "Hey! I scored "+ score + " in Snake War";
 			var source:String ="../../assets/images/gameHeaderLine.png" ;
-			trace(source);
-			socialService.facebookLinkPostWithCustomThumbnail(FBSample.fbJSON.accessToken,"http://api.shephertz.com/",status,
+			App42Log.debug(source);
+			socialService.facebookLinkPostWithCustomThumbnail(FaceBookLogin.fbJSON.accessToken,"http://api.shephertz.com/",status,
 				"https://github.com/SamitaMShephertz/App42-SocialLeaderBoard-Sample/blob/5f3029c410aa1f86840cf34e7d6a65466b2c6709/assets/images/logo.png?raw=true"
 				,"Snake War","Beat my score",new callBack());
 			headerLine1.visible = true
