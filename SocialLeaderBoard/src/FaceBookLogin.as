@@ -1,7 +1,6 @@
 import com.shephertz.app42.paas.sdk.as3.App42CallBack;
 import com.shephertz.app42.paas.sdk.as3.App42Exception;
 import com.shephertz.app42.paas.sdk.as3.App42Log;
-import com.shephertz.app42.paas.sdk.as3.game.Game;
 import com.shephertz.app42.paas.sdk.as3.social.Social;
 
 import starling.display.Button;
@@ -51,15 +50,14 @@ package
 	
 	public class FaceBookLogin extends Sprite
 	{
-		protected static const APP_ID:String = "386763061449222"; //Place your application id here
+		protected static const APP_ID:String = "202773793240795"; 
 		private var screen:Sprite ;
 		public static var fbJSON:Object ="";
 		public function FaceBookLogin()
 		{
 			super();
-			App42API.initialize("<Enter_your_APIKey>","<Enter_your_SecretKey>");
 			initialize();
-			
+			App42API.initialize("<Enter_your_APIKey>","<Enter_your_SecretKey>");
 			var bg:Image = new Image(Assets.getTextue("bg"));
 			this.addChild(bg);
 			
@@ -100,7 +98,6 @@ package
 				this.removeFromParent(true);
 				var response:FacebookAuthResponse = result as FacebookAuthResponse;
 				fbJSON =response;
-				App42Log.debug("response is : "+ response.toString())
 				var socialService:SocialService = App42API.buildSocialService();
 				socialService.linkUserFacebookAccount(fbJSON.uid,fbJSON.accessToken,new callBack());
 			} else {
@@ -120,13 +117,16 @@ package
 		
 		protected function onLogin(result:Object, fail:Object):void {
 			if (result) { 
-				var screen:Sprite = new Menu;
-				this.parent.addChild(screen);
-				this.removeFromParent(true); 
 				var response:FacebookAuthResponse = result as FacebookAuthResponse;
 				fbJSON =response;
 				var socialService:SocialService = App42API.buildSocialService();
 				socialService.linkUserFacebookAccount(fbJSON.uid,fbJSON.accessToken,new callBack());
+				if(screen != null && contains(screen))
+				{
+					removeChild(screen);
+				}
+				screen = new Menu();
+				addChild(screen); 
 				
 			} else { 
 				loginToggleBtn.visible = false;

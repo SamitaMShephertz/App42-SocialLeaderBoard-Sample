@@ -43,6 +43,7 @@ class app42CallBack implements App42CallBack{
 				firstUser.text = FacebookProfile(Score(game.getScoreList()[0]).getFacebookList()[0]).getName() ;
 				firstUserScore.text =""+ Score(game.getScoreList()[0]).getValue();
 				firstUserRank.text = "1";
+				
 			}
 			if(Score(game.getScoreList()[1]) != null) {
 				secondUser.text =  FacebookProfile(Score(game.getScoreList()[1]).getFacebookList()[1]).getName();
@@ -69,7 +70,6 @@ class app42CallBack implements App42CallBack{
 	}
 	public function onException(excption:App42Exception):void
 	{
-		App42Log.debug("Exception is : " + excption);
 		if(excption.getAppErrorCode() == 1401)
 		{
 			var objectMessage:Object = com.adobe.serialization.json.JSON.decode(excption.message);
@@ -92,13 +92,19 @@ class saveUserScoreCallBack implements App42CallBack{
 	}
 	public function onException(excption:App42Exception):void
 	{
-		App42Log.debug("Exception is : " + excption);
+		if(excption.getAppErrorCode() == 1401)
+		{
+			var objectMessage:Object = com.adobe.serialization.json.JSON.decode(excption.message);
+			var message:String  = objectMessage["app42Fault"]["details"];
+			exceptionMessage.text = message + " please check your credentials.";
+		}
 	}
 }
 
 package
 {
 	import com.shephertz.app42.paas.sdk.as3.App42API;
+	import com.shephertz.app42.paas.sdk.as3.App42Log;
 	
 	import Screens.Menu;
 	
@@ -171,7 +177,7 @@ package
 			
 			exceptionMessage = new TextField(650,200,"","Verdana",20,Color.GRAY,true);
 			this.addChild(exceptionMessage);
-			
+			exceptionMessage.visible = true
 			var btn:Button = new Button(Assets.getTextue("menubtn"));
 			btn.x = 345;
 			btn.y = 340;
@@ -195,6 +201,7 @@ package
 		{
 			scoreBoardService = App42API.buildScoreBoardService();
 			scoreBoardService.getTopNRankersFromFacebook(gameName,fbAccessToken,5,new app42CallBack());
+			exceptionMessage.visible = true
 		}
 		
 		public function saveUserScore(score:int):void{

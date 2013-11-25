@@ -53,7 +53,6 @@ package Screens
 			new App42LeaderBoard(FaceBookLogin.fbJSON).saveUserScore(score);
 			var bg:Image = new Image(Assets.getTextue("bg"));
 			this.addChild(bg);
-			App42Log.setDebug(true);	
 			var logo:Image = new Image(Assets.getTextue("logo"));
 			logo.x = 250;
 			logo.y = 60;
